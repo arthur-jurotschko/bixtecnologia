@@ -10,9 +10,9 @@ export default function Sidebar() {
   };
 
   return (
-    <nav>
-      <a href="/dashboard">Home</a>
+    <div>
+      <button onClick={() => router.push("/")}>Home</button>
       <button onClick={handleLogout}>Logout</button>
-    </nav>
+    </div>
   );
 }

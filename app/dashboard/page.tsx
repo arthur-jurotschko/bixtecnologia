@@ -1,25 +1,47 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import BarChart from "@/components/BarChart";
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function Dashboard() {
-  const router = useRouter();
-  const [revenues, setRevenues] = useState<number[]>([]);
+type Transaction = {
+  amount: number;
+  industry: string;
+  state: string;
+};
+
+export default function DashboardPage() {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
-    if (!localStorage.getItem("auth")) {
-      router.push("/login");
+    async function fetchData() {
+      const response = await fetch("/api/data");
+      const data = await response.json();
+      setTransactions(data);
+      setFilteredTransactions(data);
     }
-
-    // Definir os dados de forma segura
-    setRevenues([1000, 1200, 1400, 1600, 1800, 2000]);
+    fetchData();
   }, []);
 
   return (
-    <div>
-      <h1>Dashboard Financeiro</h1>
-      {revenues.length > 0 && <BarChart data={revenues} />}
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Total Transactions</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">{transactions.length}</div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Total Amount</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold">
+            ${filteredTransactions.reduce((acc, curr) => acc + curr.amount, 0).toFixed(2)}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
