@@ -1,0 +1,31 @@
+import '@testing-library/jest-dom';
+
+Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
+  value: () => ({
+    fillRect: () => {},
+    clearRect: () => {},
+    getImageData: () => ({ data: [] }),
+    putImageData: () => {},
+    createImageData: () => [],
+    setTransform: () => {},
+    drawImage: () => {},
+    save: () => {},
+    fillText: () => {},
+    restore: () => {},
+    beginPath: () => {},
+    moveTo: () => {},
+    lineTo: () => {},
+    closePath: () => {},
+    stroke: () => {},
+    translate: () => {},
+    scale: () => {},
+    rotate: () => {},
+    arc: () => {},
+    fill: () => {},
+    measureText: () => ({ width: 100 }),
+    transform: () => {},
+    rect: () => {},
+    clip: () => {},
+    canvas: document.createElement('canvas'),
+  }),
+});
