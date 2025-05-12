@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "../../components/Card";
+import Card from "../../components/Card";
+
 
 type Transaction = {
   amount: number;
